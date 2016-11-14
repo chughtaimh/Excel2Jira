@@ -1,3 +1,4 @@
+import platform
 import pyperclip
 import Tkinter as Tk
 import ttk
@@ -15,10 +16,10 @@ class App(ttk.Frame):
 		style = ttk.Style()
 		style.configure('TButton', font=('Serif', 10), bg="#ccc", fg='blue',
 						width=50, height=2, padding=20)
-		style.configure('TLabel', font=('Serif', 10), justify='right', height=2,
-						padding=20)
-		style.configure('TEntry', font=('Serif', 10), justify='right', height=2,
-						padding=20, wraplength=200)
+		style.configure('TLabel', font=('Serif', 10), justify='right',
+						height=2, padding=20)
+		style.configure('TEntry', font=('Serif', 10), justify='right',
+						height=2, padding=20, wraplength=200)
 
 		self.label = ttk.Label(self, text="PASTE EXCEL TABLE BELOW")
 		self.label.grid(column=0, row=0)
@@ -26,19 +27,24 @@ class App(ttk.Frame):
 		self.entry = Tk.Text(self, width=50, height=5)
 		self.entry.grid(column=0, row=1)
 
-		self.button = ttk.Button(self, text='COPY JIRA TABLE TO CLIPBOARD',
+		self.button = ttk.Button(self, text="COPY JIRA TABLE TO CLIPBOARD",
 								 command=self.copy_to_clipboard)
 		self.button.grid(column=0, row=2)
 
 	def copy_to_clipboard(self):
+		"""Converts text in self.entry to jira table format using 
+		:excel_to_jira: function and copies to clipboard."""
 		text = self.entry.get("1.0", "end")
-		jira_table = excel_to_jira(text)
+		if platform.system() == 'darwin':
+			new_line_char = '\r'
+		else:
+			new_line_char = '\n'
 
+		jira_table = excel_to_jira(text, new_line=new_line_char)
 		# Copy to clipboard
 		pyperclip.copy(jira_table)
-
 		# Set button text to "Copied!"
-		self.button.config(text='Copied!')
+		self.button.config(text="Copied!")
 
 
 # Helpers
@@ -51,9 +57,9 @@ def format_row(row, sep='|'):
 	return '{s}{r}{s}\n'.format(s=sep, r=row)
 
 
-def excel_to_jira(text):
+def excel_to_jira(text, new_line):
 	"""Converts an excel table into jira table format."""
-	head, rows = split_table(text.strip('\n'))
+	head, rows = split_table(text.strip(new_line))
 
 	head = format_row(head, sep='||')
 	rows = map(format_row, rows)
