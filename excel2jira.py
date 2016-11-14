@@ -51,14 +51,14 @@ def headers(text):
 
 
 def columns(text):
-    text = text.strip('\n')  # remove any leading/trailing \n chars
+    text = text.strip('\n')             # remove any leading/trailing \n chars
     non_headers = text.split('\n')[1:]  # split text by \n chars, take [1:]
-    rtn = '|'  # new string that will be returned
+    rtn = '|'                           # new string that will be returned
     for row in non_headers:
         for column in row.split('\t'):  # column values are separated by tabs
             rtn += column + '|'
         rtn += '\n|'
-    return rtn.rstrip('|')  # rtn everything but the trailing "|"
+    return rtn.rstrip('|')              # rtn everything but the trailing "|"
 
 
 def excel_to_jira(text):
