@@ -43,23 +43,6 @@ class App(ttk.Frame):
 
 
 # Helpers
-def headers(text):
-	header = text.split('\n')[0]
-	header_columns = header.split('\t')
-	return '||' + '||'.join(header_columns) + '||\n'
-
-
-def columns(text):
-	text = text.strip('\n')  # remove any leading/trailing \n chars
-	non_headers = text.split('\n')[1:]  # split text by \n chars, take [1:]
-	rtn = '|'  # new string that will be returned
-	for row in non_headers:
-		for column in row.split('\t'):  # column values are separated by tabs
-			rtn += column + '|'
-		rtn += '\n|'
-	return rtn.rstrip('|')  # rtn everything but the trailing "|"
-
-
 def format_row(row, sep='|'):
 	"""Replaces tabs with :sep: and returns string containing new row with
 	leading and trailing :sep:, ending with new line character.
