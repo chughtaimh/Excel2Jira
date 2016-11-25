@@ -35,7 +35,7 @@ class App(ttk.Frame):
 		"""Converts text in self.entry to jira table format using 
 		:excel_to_jira: function and copies to clipboard."""
 		text = self.entry.get("1.0", "end")
-		if platform.system() == 'darwin':
+		if platform.system().lower() == 'darwin':
 			new_line_char = '\r'
 		else:
 			new_line_char = '\n'
