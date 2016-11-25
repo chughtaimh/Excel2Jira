@@ -53,27 +53,33 @@ def format_row(row, sep='|'):
 	leading and trailing :sep:, ending with new line character.
 
 	Example: format_row('Name\tAge', sep='|') = '|Name|Age|\n'"""
-	row = row.replace('\t', sep)
-	return '{s}{r}{s}\n'.format(s=sep, r=row)
+	if row:
+		row = row.replace('\t', sep)
+		return '{s}{r}{s}\n'.format(s=sep, r=row)
+	else:
+		return ""
 
 
-def excel_to_jira(text, new_line):
+def excel_to_jira(text, new_line="\n"):
 	"""Converts an excel table into jira table format."""
-	head, rows = split_table(text.strip(new_line))
+	if not text: 
+		return ""
+	else:
+		head, rows = split_table(text.strip(new_line))
 
-	head = format_row(head, sep='||')
-	rows = map(format_row, rows)
-	rows = ''.join(rows)
+		head = format_row(head, sep='||')
+		rows = map(format_row, rows)
+		rows = ''.join(rows)
 
-	return str(head + rows)
+		return str(head + rows)
 
 
 def split_table(text, sep='\n'):
 	"""Takes a string containing excel table, and returns a list of rows (str)
 	from that table."""
 	table = text.split(sep)
-	if not table:
-		return ''
+	if table == [""]:
+		return ""
 	elif len(table) > 1:
 		return table[0], table[1:]
 	else:
