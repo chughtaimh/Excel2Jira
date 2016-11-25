@@ -1,4 +1,5 @@
 import platform
+
 from distutils.core import setup
 
 if platform.system().lower() == 'darwin':
