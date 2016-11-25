@@ -1,0 +1,5 @@
+Excel2Jira Requirements
+
+* Python 2.7
+* pyperclip==1.5.27
+* py2app==0.7.1
