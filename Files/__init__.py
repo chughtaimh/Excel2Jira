@@ -1,1 +1,0 @@
-from excel2jira import *
