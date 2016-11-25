@@ -5,7 +5,7 @@ from distutils.core import setup
 
 def main():
 	OPTIONS = {
-	    'iconfile':'atlassian.icns',
+	    'iconfile':'images/atlassian.icns',
 	    'plist': {'CFBundleShortVersionString':'0.1.0',}
 	}
 
